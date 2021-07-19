@@ -1,5 +1,5 @@
 # discord-bot-token-checker
-Discord token with discord bot
+Discord token information/reader with discord bot
 
 Installation
 ============
